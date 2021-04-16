@@ -1,0 +1,14 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/node_modules/tinymce/bower.json": "/node_modules/tinymce/bower.json",
+    "/node_modules/tinymce/changelog.txt": "/node_modules/tinymce/changelog.txt",
+    "/node_modules/tinymce/composer.json": "/node_modules/tinymce/composer.json",
+    "/node_modules/tinymce/jquery.tinymce.js": "/node_modules/tinymce/jquery.tinymce.js",
+    "/node_modules/tinymce/jquery.tinymce.min.js": "/node_modules/tinymce/jquery.tinymce.min.js",
+    "/node_modules/tinymce/license.txt": "/node_modules/tinymce/license.txt",
+    "/node_modules/tinymce/package.json": "/node_modules/tinymce/package.json",
+    "/node_modules/tinymce/readme.md": "/node_modules/tinymce/readme.md",
+    "/node_modules/tinymce/tinymce.js": "/node_modules/tinymce/tinymce.js",
+    "/node_modules/tinymce/tinymce.min.js": "/node_modules/tinymce/tinymce.min.js"
+}
