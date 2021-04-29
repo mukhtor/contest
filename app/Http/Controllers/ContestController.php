@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateContestRequest;
 use App\Http\Requests\UpdateContestRequest;
+use App\Models\Contest;
+use App\Models\Subjects;
 use App\Repositories\ContestRepository;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
@@ -42,7 +44,8 @@ class ContestController extends AppBaseController
      */
     public function create()
     {
-        return view('contests.create');
+        $subjects = Subjects::all()->pluck('name','id');
+        return view('contests.create',compact('subjects'));
     }
 
     /**
@@ -54,10 +57,13 @@ class ContestController extends AppBaseController
      */
     public function store(CreateContestRequest $request)
     {
-        $input = $request->all();
 
-        $contest = $this->contestRepository->create($input);
-
+        Contest::create([
+            'title' =>$request->title,
+            'begin_date' => $request->begin_date,
+            'duration' => $request->duration,
+            'subjects' => json_encode($request->subjects)
+        ]);
         Flash::success('Contest saved successfully.');
 
         return redirect(route('contests.index'));

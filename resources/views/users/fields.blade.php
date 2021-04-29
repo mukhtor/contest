@@ -1,9 +1,8 @@
 <!-- Group Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('group_id', 'Group Id:') !!}
-    {!! Form::number('group_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('group_id', $group, null, ['class' => 'form-control']) !!}
 </div>
-
 <!-- Name Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('name', 'Name:') !!}
@@ -11,10 +10,6 @@
 </div>
 
 <!-- Role Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('role', 'Role:') !!}
-    {!! Form::text('role', null, ['class' => 'form-control','maxlength' => 255,'maxlength' => 255]) !!}
-</div>
 
 <!-- Username Field -->
 <div class="form-group col-sm-6">
@@ -27,9 +22,8 @@
     {!! Form::label('password', 'Password:') !!}
     {!! Form::password('password', ['class' => 'form-control','maxlength' => 255,'maxlength' => 255]) !!}
 </div>
-
-<!-- Remember Token Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('remember_token', 'Remember Token:') !!}
-    {!! Form::text('remember_token', null, ['class' => 'form-control','maxlength' => 100,'maxlength' => 100]) !!}
+<div class="form-group col-sm-12">
+    <label for="multidata">Multi Data</label>
+    <textarea rows="10" id="multidata" class="form-control" placeholder="multiple user data" name="multiData"></textarea>
 </div>
+

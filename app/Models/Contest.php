@@ -31,7 +31,8 @@ class Contest extends Model
     public $fillable = [
         'title',
         'begin_date',
-        'duration'
+        'duration',
+        'subjects'
     ];
 
     /**
@@ -60,8 +61,9 @@ class Contest extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function contestQuestions()
+    public function getSubjects()
     {
-        return $this->hasMany(\App\Models\ContestQuestions::class, 'contest_id');
+        return $this->hasMany(\App\Models\Subjects::class, 'subjects');
     }
+
 }

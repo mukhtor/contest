@@ -25,7 +25,7 @@ class Users extends Model
 
 
     public $table = 'users';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -38,6 +38,7 @@ class Users extends Model
         'role',
         'username',
         'password',
+        'password_deHash',
         'remember_token'
     ];
 
@@ -53,6 +54,7 @@ class Users extends Model
         'role' => 'string',
         'username' => 'string',
         'password' => 'string',
+        'password_deHash' => 'string',
         'remember_token' => 'string'
     ];
 
@@ -62,9 +64,8 @@ class Users extends Model
      * @var array
      */
     public static $rules = [
-        'group_id' => 'nullable',
-        'name' => 'required|string|max:255',
-        'role' => 'required|string|max:255',
+        'group_id' => 'required',
+        'role' => 'nullable',
         'username' => 'required|string|max:255',
         'password' => 'required|string|max:255',
         'remember_token' => 'nullable|string|max:100'
@@ -73,9 +74,9 @@ class Users extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function group()
+    public function getGroup()
     {
-        return $this->belongsTo(\App\Models\Group::class, 'group_id');
+        return $this->belongsTo(\App\Models\Groups::class, 'group_id');
     }
 
     /**
@@ -83,6 +84,6 @@ class Users extends Model
      **/
     public function contestHistories()
     {
-        return $this->hasMany(\App\Models\ContestHistory::class, 'user_id');
+        return $this->hasMany(\App\Models\ContestHistories::class, 'user_id');
     }
 }

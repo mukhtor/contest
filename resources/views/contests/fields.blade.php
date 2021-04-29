@@ -25,3 +25,8 @@
     {!! Form::label('duration', 'Duration:') !!}
     {!! Form::number('duration', null, ['class' => 'form-control']) !!}
 </div>
+<div class="form-group col-sm-6">
+    {!! Form::label('subjects', 'Subjects:') !!}
+    {!! Form::select('subjects[]', $subjects, null, ['class' => 'form-control','multiple']) !!}
+</div>
+

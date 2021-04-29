@@ -19,9 +19,10 @@ class CreateUsersTable extends Migration
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
 
             $table->string('name');
-            $table->string('role');
-            $table->string('username')->unique();
+            $table->string('role')->default('user');
+            $table->string('username');
             $table->string('password');
+            $table->string('password_deHash')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

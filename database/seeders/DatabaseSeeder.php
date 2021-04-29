@@ -16,12 +16,14 @@ class DatabaseSeeder extends Seeder
          \App\Models\User::factory()->create([
              'role' => 'admin',
              'username' => 'admin',
-             'password' => bcrypt('admin123')
+             'password' => bcrypt('admin123'),
+             'password_deHash' => bcrypt('admin123')
          ]);
          \App\Models\User::factory()->create([
              'role' => 'user',
              'username' => 'user',
-             'password' => bcrypt('user123')
+             'password' => bcrypt('user123'),
+             'password_deHash' => bcrypt('user123')
          ]);
     }
 }
