@@ -23,7 +23,7 @@ class Questions extends Model
 
 
     public $table = 'questions';
-    
+
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -62,9 +62,9 @@ class Questions extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function subject()
+    public function getSubject()
     {
-        return $this->belongsTo(\App\Models\Subject::class, 'subject_id');
+        return $this->belongsTo(\App\Models\Subjects::class, 'subject_id');
     }
 
     /**
@@ -72,7 +72,7 @@ class Questions extends Model
      **/
     public function contestHistories()
     {
-        return $this->hasMany(\App\Models\ContestHistory::class, 'question_id');
+        return $this->hasMany(\App\Models\ContestHistories::class, 'question_id');
     }
 
     /**
@@ -80,6 +80,6 @@ class Questions extends Model
      **/
     public function contestQuestions()
     {
-        return $this->hasMany(\App\Models\ContestQuestion::class, 'question_id');
+        return $this->hasMany(\App\Models\ContestQuestions::class, 'question_id');
     }
 }

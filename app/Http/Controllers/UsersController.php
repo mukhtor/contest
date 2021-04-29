@@ -12,6 +12,7 @@ use App\Http\Controllers\AppBaseController;
 use Illuminate\Http\Request;
 use Flash;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Response;
 
 class UsersController extends AppBaseController
@@ -60,17 +61,17 @@ class UsersController extends AppBaseController
     public function store(CreateUsersRequest $request)
     {
 
-        if ($request->multiData) {
+        if ($request->name) {
             $str = "";
-            for ($i = 0; $i < strlen($request->multiData); $i++) {
-                if ($request->multiData[$i] >= 'a' && $request->multiData[$i] <= 'z' || $request->multiData[$i] >= 'A' && $request->multiData[$i] <= 'Z') {
-                    $str .= $request->multiData[$i];
+            for ($i = 0; $i < strlen($request->name); $i++) {
+                if ($request->name[$i] >= 'a' && $request->name[$i] <= 'z' || $request->multiname[$i] >= 'A' && $request->multiname[$i] <= 'Z') {
+                    $str .= $request->name[$i];
                 } else {
                     User::create([
                         'name' => $str,
-                        'username' => $request->username . $str,
-                        'password' => Hash::make($request->password),
-                        'password_deHash' => $request->password,
+                        'username' => Str::slug($str,),
+                        'password_deHash' => $pass = random_int(1,9),
+                        'password' => Hash::make($pass),
                         'group_id' => $request->group_id
                     ]);
                     $str = "";
@@ -86,16 +87,6 @@ class UsersController extends AppBaseController
                     'group_id' => $request->group_id
                 ]);
             }
-        }
-
-        if ($request->name) {
-            User::create([
-                'name' => $request->name,
-                'username' => $request->username,
-                'password' => Hash::make($request->password),
-                'password_deHash' => $request->password,
-                'group_id' => $request->group_id
-            ]);
         }
 
         Flash::success('Users saved successfully.');

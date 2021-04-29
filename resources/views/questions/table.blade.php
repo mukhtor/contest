@@ -11,9 +11,9 @@
         <tbody>
         @foreach($questions as $questions)
             <tr>
-                <td>{{ $questions->questions }}</td>
+                <td>{!! $questions->questions  !!}</td>
             <td>{{ $questions->editor }}</td>
-            <td>{{ $questions->subject_id }}</td>
+            <td>{{ $questions->getSubject->name }}</td>
                 <td width="120">
                     {!! Form::open(['route' => ['questions.destroy', $questions->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

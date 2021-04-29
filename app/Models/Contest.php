@@ -61,9 +61,12 @@ class Contest extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
-    public function getSubjects()
-    {
-        return $this->hasMany(\App\Models\Subjects::class, 'subjects');
-    }
+//    public function getSubjects()
+//    {
+//        return $this->hasMany(\App\Models\Subjects::class, 'subjects');
+//    }
 
+    public function getContestParsedAttribute(){
+        return json_decode($this->subjects);
+    }
 }

@@ -66,8 +66,6 @@ class Users extends Model
     public static $rules = [
         'group_id' => 'required',
         'role' => 'nullable',
-        'username' => 'required|string|max:255',
-        'password' => 'required|string|max:255',
         'remember_token' => 'nullable|string|max:100'
     ];
 

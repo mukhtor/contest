@@ -16,8 +16,8 @@
                 <td>{{ $contest->begin_date }}</td>
                 <td>{{ $contest->duration }}</td>
                 <td>
-                    @foreach(json_decode($contest->subjects) as $item)
-                        {{$item->getSubjects->name}}
+                    @foreach($contest->ContestParsed as $item)
+                        {{\Illuminate\Support\Facades\DB::table('subjects')->where('id',$item)->pluck('name')->implode(' ')}}
                      @endforeach
                 </td>
                 <td width="120">
