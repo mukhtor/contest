@@ -140,7 +140,6 @@ class GroupsController extends AppBaseController
     public function destroy($id)
     {
         $groups = $this->groupsRepository->find($id);
-
         if (empty($groups)) {
             Flash::error('Groups not found');
 

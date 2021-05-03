@@ -18,7 +18,6 @@ class Groups extends Model
 
 
     public $table = 'groups';
-    
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
 
@@ -48,5 +47,5 @@ class Groups extends Model
         'name' => 'required|string|max:255'
     ];
 
-    
+
 }
