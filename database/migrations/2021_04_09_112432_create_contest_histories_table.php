@@ -19,9 +19,12 @@ class CreateContestHistoriesTable extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->unsignedBigInteger('question_id')->index();
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
+
             $table->unsignedBigInteger('contest_id')->index();
             $table->foreign('contest_id')->references('id')->on('contest')->onDelete('cascade');
-
+            $table->longText('answer');
             $table->timestamps();
         });
     }

@@ -32,7 +32,7 @@
                                 <td>{!! $item->getContest->title!!}</td>
 {{--                                <td>{{$item->question->getSubject->name}}</td>--}}
                                 <td>
-                                    <a class="btn btn-primary" href="">Batafsil</a>
+                                    <a class="btn btn-primary" href="{{route('more',$item->getContest->id)}}">Batafsil</a>
                                 </td>
                             </tr>
                            @endforeach
@@ -46,14 +46,7 @@
                         <!-- pagination -->
                         <div class="col-md-12">
                             <div class="post-pagination">
-                                <a href="#" class="pagination-back pull-left">Back</a>
-                                <ul class="pages">
-                                    <li class="active">1</li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                </ul>
-                                <a href="#" class="pagination-next pull-right">Next</a>
+                                    {{$history->links()}}
                             </div>
                         </div>
                         <!-- pagination -->

@@ -17,10 +17,11 @@
                         <label>Davomiyligi</label>
                         <p class="lead">{{$start->contest->duration}}</p>
                     </div>
-                    @if($start->contest->begin_date < strtotime('Y-m-d H:i:s',time()))
-                    <a class="main-button icon-button" href="#">Bosh Sahifa</a>
+                    @if(strtotime($start->contest->begin_date) > time())
+
+                    <a class="main-button icon-button" href="{{route('begin')}}">Bosh Sahifa</a>
                     @else
-                    <a class="main-button icon-button" href="#">Boshlash</a>
+                    <a class="main-button icon-button" href="{{route('start_contest',$start->contest_id)}}">Boshlash</a>
                     @endif
                 </div>
 

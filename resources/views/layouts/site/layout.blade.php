@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{{asset('siteAsset/css/style.css')}}">
     <link rel="stylesheet" href="{{asset('siteAsset/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('siteAsset/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <!--	Корневой файл-->
 {{--    <script src="../../asset/codemirror-5.61.0/lib/codemirror.js"></script>--}}
 
@@ -73,55 +76,12 @@
     <!-- Backgound Image -->
     <div class="bg-image bg-parallax overlay" style="background-image:url({{asset('siteAsset/img/home-background.jpg')}})"></div>
     <!-- /Backgound Image -->
-
-    <div class="home-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <h1 class="white-text">Edusite Free Online Training Courses</h1>
-                    <p class="lead white-text">Libris vivendo eloquentiam ex ius, nec id splendide abhorreant, eu pro alii error homero.</p>
-                    <a class="main-button icon-button" href="#">Get Started!</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 @yield('main_content')
 <footer id="footer" class="section">
 
     <!-- container -->
     <div class="container">
-
-        <!-- row -->
-        <div class="row">
-
-            <!-- footer logo -->
-            <div class="col-md-6">
-                <div class="footer-logo">
-                    <a class="logo" href="index.html">
-                        <img src="./img/logo.png" alt="logo">
-                    </a>
-                </div>
-            </div>
-            <!-- footer logo -->
-
-            <!-- footer nav -->
-            <div class="col-md-6">
-                <ul class="footer-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Courses</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <!-- /footer nav -->
-
-        </div>
-        <!-- /row -->
-
-        <!-- row -->
         <div id="bottom-footer" class="row">
 
             <!-- social -->

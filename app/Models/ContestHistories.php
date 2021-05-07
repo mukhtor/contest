@@ -31,6 +31,7 @@ class ContestHistories extends Model
     public $fillable = [
         'user_id',
         'contest_id',
+        'question_id',
         'answer'
     ];
 
@@ -61,6 +62,10 @@ class ContestHistories extends Model
     public function getContest()
     {
         return $this->belongsTo(\App\Models\Contest::class, 'contest_id');
+    }
+    public function getQuestions()
+    {
+        return $this->belongsTo(\App\Models\Questions::class, 'question_id');
     }
 
     /**
