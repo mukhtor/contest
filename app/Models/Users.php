@@ -72,7 +72,7 @@ class Users extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function getGroup()
+    public function group()
     {
         return $this->belongsTo(\App\Models\Groups::class, 'group_id');
     }

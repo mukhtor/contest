@@ -33,6 +33,12 @@
         <p>{{__('menu.contest_questions')}}</p>
     </a>
 </li>
+<li class="nav-item {{ Request::is('admin/contestUsers*') ? 'active' : '' }}">
+    <a class="nav-link" href="{!! route('contestUsers.index') !!}">
+        <i class="nav-icon fa fa-building"></i>
+        <p>Contest Users</p>
+    </a>
+</li>
 
 <li class="nav-item {{ Request::is('admin/contestHistories*') ? 'active' : '' }}">
     <a class="nav-link" href="{!! route('contestHistories.index') !!}">

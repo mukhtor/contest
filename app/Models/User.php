@@ -42,5 +42,8 @@ class User extends Authenticatable
      */
     protected $casts = [
     ];
-
+    public function group()
+    {
+        return $this->belongsTo(\App\Models\Groups::class, 'group_id');
+    }
 }

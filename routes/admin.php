@@ -18,6 +18,8 @@ Route::group([
 
     Route::resource('contestQuestions', App\Http\Controllers\ContestQuestionsController::class);
 
+    Route::resource('contestUsers', App\Http\Controllers\ContestUsersController::class);
+
     Route::resource('contestHistories', App\Http\Controllers\ContestHistoriesController::class);
 
     Route::resource('users', App\Http\Controllers\UsersController::class);

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateContestHistoriesTable extends Migration
+class CreateContestUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateContestHistoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('contest_histories', function (Blueprint $table) {
+        Schema::create('contest_user', function (Blueprint $table) {
             $table->id();
-
-            $table->unsignedBigInteger('user_id')->index();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
-            $table->unsignedBigInteger('contest_id')->index();
+            $table->unsignedBigInteger('contest_id');
+            $table->string('user_id');
             $table->foreign('contest_id')->references('id')->on('contest')->onDelete('cascade');
-
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
@@ -33,7 +30,6 @@ class CreateContestHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('contest_histories');
+        Schema::dropIfExists('contest_user');
     }
 }

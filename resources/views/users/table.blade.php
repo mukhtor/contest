@@ -12,7 +12,7 @@
         <tbody>
         @foreach($users as $users)
             <tr>
-                <td>{{ $users->getGroup->name}}</td>
+                <td>{{ $users->group->name}}</td>
                 <td>{{ $users->name }}</td>
                 <td>{{ $users->role }}</td>
                 <td>{{ $users->username }}</td>

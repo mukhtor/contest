@@ -30,7 +30,8 @@ class ContestHistories extends Model
 
     public $fillable = [
         'user_id',
-        'question_id'
+        'contest_id',
+        'answer'
     ];
 
     /**
@@ -41,7 +42,7 @@ class ContestHistories extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
-        'question_id' => 'integer'
+        'contest_id' => 'integer'
     ];
 
     /**
@@ -51,15 +52,15 @@ class ContestHistories extends Model
      */
     public static $rules = [
         'user_id' => 'required',
-        'question_id' => 'required'
+        'contest_id' => 'required'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      **/
-    public function question()
+    public function getContest()
     {
-        return $this->belongsTo(\App\Models\Questions::class, 'question_id');
+        return $this->belongsTo(\App\Models\Contest::class, 'contest_id');
     }
 
     /**
