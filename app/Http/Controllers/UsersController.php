@@ -60,32 +60,20 @@ class UsersController extends AppBaseController
      */
     public function store(CreateUsersRequest $request)
     {
-$string  = "";
-        for ($x = 0; $x <strlen($request->name); $x++ ){
-            if ($request->name[$x] != "\n"){
-               $string.=$request->name[$x];
-            }
-            else{
-                User::create([
-                        'name' => $string,
-                        'username' => Str::slug($string),
-                        'password_deHash' => $pass = random_int(11111111,99999999),
+        if ($request->name) {
+            $users = explode("\n", $request->name);
+            foreach ($users as $user){
+                if ($user && $user != ""){
+                    User::create([
+                        'name' => $user,
+                        'username' => Str::slug($user),
+                        'password_deHash' => $pass = random_int(1,9),
                         'password' => Hash::make($pass),
                         'group_id' => $request->group_id
                     ]);
-                    $string = "";
-
+                }
             }
         }
-        if ($string != "") {
-                User::create([
-                    'name' => $string,
-                    'username' => Str::slug($string),
-                    'password_deHash' => $pass = random_int(11111111,99999999),
-                    'password' => Hash::make($pass),
-                    'group_id' => $request->group_id
-                ]);
-            }
         Flash::success('Users saved successfully.');
         return redirect(route('users.index'));
     }

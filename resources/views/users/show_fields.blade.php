@@ -25,7 +25,7 @@
 <!-- Password Field -->
 <div class="col-sm-12">
     {!! Form::label('password', 'Password:') !!}
-    <p>{{ \Illuminate\Support\Facades\Crypt::decrypt($users->password)}}</p>
+    <p>{{ $users->password}}</p>
 </div>
 
 <!-- Remember Token Field -->

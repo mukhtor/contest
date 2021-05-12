@@ -99,14 +99,14 @@ class ContestController extends AppBaseController
     public function edit($id)
     {
         $contest = $this->contestRepository->find($id);
-
+        $subjects = Subjects::all()->pluck('name','id');
         if (empty($contest)) {
             Flash::error('Contest not found');
 
             return redirect(route('contests.index'));
         }
 
-        return view('contests.edit')->with('contest', $contest);
+        return view('contests.edit')->with('contest', $contest)->with('subjects', $subjects);
     }
 
     /**

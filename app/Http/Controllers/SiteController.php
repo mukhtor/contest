@@ -19,11 +19,9 @@ class SiteController extends Controller
 
     public function beginContest(){
         $history = ContestHistories::where('user_id',Auth::id())->paginate(10);
-        //$contest = DB::table('contest_user')->whereRaw('json_contains(user_id,\'"'.Auth::id().'"\')')->get();
-        $contest = ContestUsers::whereRaw('json_contains(user_id,\'"'.Auth::id().'"\')')->where('status',0)->get();
-//        $his = ContestHistories::groupBy('contest_id')->select('*', DB::raw('count(*) as contest_id'))->get();
-//        dd($his);
-//        exit();
+        $user_id = Auth::id();
+
+        $contest = ContestUsers::whereRaw("json_contains(user_id,'\"$user_id\"')")->where('status',0)->get();
 
         return view('site.index',compact('history','contest'));
     }
@@ -36,7 +34,14 @@ class SiteController extends Controller
     }
 
     public function startContest($id){
+
+        $contest = Contest::findOrFail($id);
+
+        if (!ContestHistories::where('contest_id',$id)->where('user_id',Auth::id())->count())
+            ContestHistories::make($id, Auth::id());
+
         $questions = ContestHistories::where('contest_id',$id)->where('user_id',Auth::id())->simplePaginate(1);
+
         return view('site.start_contest' ,compact('questions'));
     }
 

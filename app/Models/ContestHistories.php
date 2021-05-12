@@ -19,7 +19,6 @@ use Illuminate\Database\Eloquent\Model as Model;
 class ContestHistories extends Model
 {
 
-
     public $table = 'contest_histories';
 
     const CREATED_AT = 'created_at';
@@ -74,5 +73,9 @@ class ContestHistories extends Model
     public function user()
     {
         return $this->belongsTo(\App\Models\User::class, 'user_id');
+    }
+
+    public static function make($contest_id, $user_id){
+        $contest = Contest::findOrFail($contest_id);
     }
 }
