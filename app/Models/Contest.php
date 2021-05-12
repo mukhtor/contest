@@ -32,7 +32,8 @@ class Contest extends Model
         'title',
         'begin_date',
         'duration',
-        'subjects'
+        'subjects',
+        'question_count'
     ];
 
     /**

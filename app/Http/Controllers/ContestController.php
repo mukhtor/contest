@@ -60,6 +60,7 @@ class ContestController extends AppBaseController
 
         Contest::create([
             'title' =>$request->title,
+            'question_count' =>$request->question_count,
             'begin_date' => $request->begin_date,
             'duration' => $request->duration,
             'subjects' => json_encode($request->subjects)

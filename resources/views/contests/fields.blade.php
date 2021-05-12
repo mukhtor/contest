@@ -26,6 +26,10 @@
     {!! Form::number('duration', null, ['class' => 'form-control']) !!}
 </div>
 <div class="form-group col-sm-6">
+    {!! Form::label('question_count', 'Question Count:') !!}
+    {!! Form::number('question_count', null, ['class' => 'form-control']) !!}
+</div>
+<div class="form-group col-sm-6">
     {!! Form::label('subjects', 'Subjects:') !!}
     {!! Form::select('subjects[]', $subjects, null, ['class' => 'form-control','multiple']) !!}
 </div>

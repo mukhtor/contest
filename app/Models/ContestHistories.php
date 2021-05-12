@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model as Model;
-
+use Illuminate\Support\Facades\Auth;
 
 
 /**
@@ -77,5 +77,22 @@ class ContestHistories extends Model
 
     public static function make($contest_id, $user_id){
         $contest = Contest::findOrFail($contest_id);
+        $question_count = $contest->question_count;
+        $subjects = json_decode($contest->subjects);
+        $subjectCount = count($subjects);
+        $userQuestions=[];
+        for ($x = 0;$x < $question_count; $x++){
+            $subject_id = $subjects[$x%$subjectCount];
+            $subject = Questions::where('subject_id',$subject_id)->inRandomOrder()->first();
+            array_push($userQuestions,['id' => $subject->id, 'editor' => $subject->editor]);
+        }
+        foreach ($userQuestions as $item){
+            ContestHistories::create([
+                'user_id' =>Auth::id(),
+                'question_id' => $item['id'],
+                'contest_id' =>$contest->id,
+                'answer' => $item['editor']
+            ]);
+        }
     }
 }

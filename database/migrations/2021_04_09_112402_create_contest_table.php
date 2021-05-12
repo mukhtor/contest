@@ -19,6 +19,7 @@ class CreateContestTable extends Migration
             $table->timestamp('begin_date')->nullable();
             $table->integer('duration')->comment('second');
             $table->text('subjects');
+            $table->integer('question_count');
             $table->timestamps();
         });
     }

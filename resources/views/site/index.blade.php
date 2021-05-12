@@ -12,16 +12,14 @@
                     <th>Davomiyligi</th>
                     <th></th>
                 </tr>
-                <tr>
                     @foreach($contest as $item)
                         <tr>
                             <td><a href="#">{{$item->contest->title}}</a></td>
                             <td>{{$item->contest->begin_date}}</td>
                             <td>{{$item->contest->duration}} min</td>
-                            <td><a href="#" class="btn btn-success">Kirish</a></td>
+                            <td><a href="{{route('start',$item->contest_id)}}" class="btn btn-success">Kirish</a></td>
                         </tr>
                     @endforeach
-                </tr>
             </table>
 
         </div>

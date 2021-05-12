@@ -18,18 +18,18 @@ class SiteController extends Controller
     }
 
     public function beginContest(){
-        $history = ContestHistories::where('user_id',Auth::id())->paginate(10);
+//        $history = ContestHistories::where('user_id',Auth::id())->paginate(10);
         $user_id = Auth::id();
 
         $contest = ContestUsers::whereRaw("json_contains(user_id,'\"$user_id\"')")->where('status',0)->get();
 
-        return view('site.index',compact('history','contest'));
+        return view('site.index',compact('contest'));
     }
 
 
 
     public function start($id){
-        $start = ContestUsers::findOrFail($id);
+        $start = Contest::findOrFail($id);
         return view('site.start',compact('start'));
     }
 

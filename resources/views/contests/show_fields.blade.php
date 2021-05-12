@@ -15,4 +15,8 @@
     {!! Form::label('duration', 'Duration:') !!}
     <p>{{ $contest->duration }}</p>
 </div>
+<div class="col-sm-12">
+    {!! Form::label('question_count', 'Question Count:') !!}
+    <p>{{ $contest->question_count }}</p>
+</div>
 
