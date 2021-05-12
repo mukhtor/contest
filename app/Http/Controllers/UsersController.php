@@ -60,35 +60,32 @@ class UsersController extends AppBaseController
      */
     public function store(CreateUsersRequest $request)
     {
-
-        if ($request->name) {
-            $str = "";
-            for ($i = 0; $i < strlen($request->name); $i++) {
-                if ($request->name[$i] >= 'a' && $request->name[$i] <= 'z' || $request->multiname[$i] >= 'A' && $request->multiname[$i] <= 'Z') {
-                    $str .= $request->name[$i];
-                } else {
-                    User::create([
-                        'name' => $str,
-                        'username' => Str::slug($str,),
-                        'password_deHash' => $pass = random_int(1,9),
+$string  = "";
+        for ($x = 0; $x <strlen($request->name); $x++ ){
+            if ($request->name[$x] != "\n"){
+               $string.=$request->name[$x];
+            }
+            else{
+                User::create([
+                        'name' => $string,
+                        'username' => Str::slug($string),
+                        'password_deHash' => $pass = random_int(11111111,99999999),
                         'password' => Hash::make($pass),
                         'group_id' => $request->group_id
                     ]);
-                    $str = "";
-                    $i += 1;
-                }
+                    $string = "";
+
             }
-            if ($str != "") {
+        }
+        if ($string != "") {
                 User::create([
-                    'name' => $str,
-                    'username' => $request->username . $str,
-                    'password' => Hash::make($request->password),
-                    'password_deHash' => $request->password,
+                    'name' => $string,
+                    'username' => Str::slug($string),
+                    'password_deHash' => $pass = random_int(11111111,99999999),
+                    'password' => Hash::make($pass),
                     'group_id' => $request->group_id
                 ]);
             }
-        }
-
         Flash::success('Users saved successfully.');
         return redirect(route('users.index'));
     }

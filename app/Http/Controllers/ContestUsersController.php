@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contest;
+use App\Models\ContestHistories;
 use App\Models\ContestUsers;
 use App\Models\Groups;
+use App\Models\Questions;
 use App\Models\Users;
 use Illuminate\Http\Request;
 
@@ -46,6 +48,17 @@ class ContestUsersController extends Controller
            'contest_id' => 'required',
            'user_id' => 'required'
         ]);
+
+        foreach ($contestUser['user_id'] as $item){
+           for ($i = 1; $i <= 5; $i++){
+               $ques = Questions::inRandomOrder()->limit(1)->pluck('id');
+               ContestHistories::create([
+                   'contest_id' => $contestUser['contest_id'],
+                   'user_id' => $item,
+                   'question_id' => $ques['0'],
+               ]);
+           }
+        }
 
         ContestUsers::create([
             'user_id' => json_encode($contestUser['user_id']),

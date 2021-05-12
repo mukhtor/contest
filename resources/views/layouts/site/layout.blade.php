@@ -15,23 +15,24 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <!--	Корневой файл-->
-{{--    <script src="../../asset/codemirror-5.61.0/lib/codemirror.js"></script>--}}
+    <script src="{{asset('asset/codemirror-5.61.0/lib/codemirror.js')}}"></script>
 
-{{--    <!--	Формат чтения в редакторе-->--}}
-{{--    <script src="../../asset/codemirror-5.61.0/mode/htmlmixed/htmlmixed.js"></script>--}}
-{{--    <script src="../../asset/codemirror-5.61.0/mode/xml/xml.js"></script>--}}
-{{--    <!--	Styles for editor-->--}}
-{{--    <link rel="stylesheet" href="../../asset/codemirror-5.61.0/lib/codemirror.css">--}}
-{{--    <link rel="stylesheet" href="../../asset/codemirror-5.61.0/theme/darcula.css">--}}
-{{--    <link rel="stylesheet" href="../../asset/codemirror-5.61.0/addon/scroll/simplescrollbars.css">--}}
-{{--    <link rel="stylesheet" href="../../asset/codemirror-5.61.0/addon/display/fullscreen.css">--}}
-{{--    <!--Addition deatures for editor-->--}}
-{{--    <script src="../../asset/codemirror-5.61.0/addon/edit/closetag.js"></script>--}}
-{{--    <script src="../../asset/codemirror-5.61.0/addon/edit/closebrackets.js"></script>--}}
-{{--    <script src="../../asset/codemirror-5.61.0/addon/scroll/simplescrollbars.js"></script>--}}
-{{--    <script src="../../asset/codemirror-5.61.0/addon/display/fullscreen.js"></script>--}}
-{{--    <script src="../../asset/codemirror-5.61.0/keymap/sublime.js"></script>--}}
+    <!--	Формат чтения в редакторе-->
+    <script src="{{asset('asset/codemirror-5.61.0/mode/htmlmixed/htmlmixed.js')}}"></script>
+    <script src="{{asset('asset/codemirror-5.61.0/mode/xml/xml.js')}}"></script>
+    <!--	Styles for editor-->
+    <link rel="stylesheet" href="{{asset('asset/codemirror-5.61.0/lib/codemirror.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/codemirror-5.61.0/theme/darcula.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/codemirror-5.61.0/addon/scroll/simplescrollbars.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/codemirror-5.61.0/addon/display/fullscreen.css')}}">
+    <!--Addition deatures for editor-->
+    <script src="{{asset('asset/codemirror-5.61.0/addon/edit/closetag.js')}}"></script>
+    <script src="{{asset('asset/codemirror-5.61.0/addon/edit/closebrackets.js')}}"></script>
+    <script src="{{asset('asset/codemirror-5.61.0/addon/scroll/simplescrollbars.js')}}"></script>
+    <script src="{{asset('asset/codemirror-5.61.0/addon/display/fullscreen.js')}}"></script>
+    <script src="{{asset('asset/codemirror-5.61.0/keymap/sublime.js')}}"></script>
 
 </head>
 
