@@ -11,12 +11,12 @@
         <ul class="nav navbar-nav">
             <li class="dropdown">
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                    Welcome, User <b class="caret"></b>
+                    Xush kelibsiz, {{ Auth::user()->name }}  <b class="caret"></b>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right position-absolute" aria-labelledby="navbarDropdown">
                     <a href="#" class="dropdown-item"
                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Log out
+                        Chiqish
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
