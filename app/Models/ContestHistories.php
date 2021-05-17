@@ -62,7 +62,11 @@ class ContestHistories extends Model
     {
         return $this->belongsTo(\App\Models\Contest::class, 'contest_id');
     }
-    public function getQuestions()
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function question()
     {
         return $this->belongsTo(\App\Models\Questions::class, 'question_id');
     }

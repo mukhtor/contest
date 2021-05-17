@@ -20,4 +20,5 @@ mix.copy('resources/js/jquery-3.2.1.slim.min.js' , 'public/js');
 mix.copy('resources/js/popper.min.js' , 'public/js');
 mix.copy('resources/js/bootstrap.min.js' , 'public/js');
 mix.copy('resources/css/bootstrap.min.css' , 'public/css');
+mix.copy('resources/css/main.css' , 'public/css');
 mix.copyDirectory('node_modules/tinymce', 'public/node_modules/tinymce');

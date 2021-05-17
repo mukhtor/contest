@@ -5,6 +5,7 @@
     "/js/popper.min.js": "/js/popper.min.js",
     "/js/bootstrap.min.js": "/js/bootstrap.min.js",
     "/css/bootstrap.min.css": "/css/bootstrap.min.css",
+    "/css/main.css": "/css/main.css",
     "/node_modules/tinymce/bower.json": "/node_modules/tinymce/bower.json",
     "/node_modules/tinymce/changelog.txt": "/node_modules/tinymce/changelog.txt",
     "/node_modules/tinymce/composer.json": "/node_modules/tinymce/composer.json",

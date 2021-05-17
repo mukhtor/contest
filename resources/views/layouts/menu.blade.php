@@ -27,12 +27,6 @@
     </a>
 </li>
 
-<li class="nav-item {{ Request::is('admin/contestQuestions*') ? 'active' : '' }}">
-    <a class="nav-link" href="{!! route('contestQuestions.index') !!}">
-        <i class="nav-icon fa fa-building"></i>
-        <p>{{__('menu.contest_questions')}}</p>
-    </a>
-</li>
 <li class="nav-item {{ Request::is('admin/contestUsers*') ? 'active' : '' }}">
     <a class="nav-link" href="{!! route('contestUsers.index') !!}">
         <i class="nav-icon fa fa-building"></i>

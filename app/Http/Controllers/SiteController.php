@@ -40,7 +40,7 @@ class SiteController extends Controller
         if (!ContestHistories::where('contest_id',$id)->where('user_id',Auth::id())->count())
             ContestHistories::make($id, Auth::id());
 
-        $questions = ContestHistories::where('contest_id',$id)->where('user_id',Auth::id())->simplePaginate(1);
+        $questions = ContestHistories::where('contest_id',$id)->where('user_id',Auth::id())->get();
 
         return view('site.start_contest' ,compact('questions'));
     }

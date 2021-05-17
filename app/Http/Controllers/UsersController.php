@@ -67,7 +67,7 @@ class UsersController extends AppBaseController
                     User::create([
                         'name' => $user,
                         'username' => Str::slug($user),
-                        'password_deHash' => $pass = random_int(1,9),
+                        'password_deHash' => $pass = random_int(100000,999999),
                         'password' => Hash::make($pass),
                         'group_id' => $request->group_id
                     ]);

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @package App\Models
  * @version April 12, 2021, 1:57 pm UTC
  *
- * @property \App\Models\Subject $subject
+ * @property \App\Models\Subjects $subject
  * @property \Illuminate\Database\Eloquent\Collection $contestHistories
  * @property \Illuminate\Database\Eloquent\Collection $contestQuestions
  * @property string $questions
