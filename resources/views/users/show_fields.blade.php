@@ -25,7 +25,7 @@
 <!-- Password Field -->
 <div class="col-sm-12">
     {!! Form::label('password', 'Password:') !!}
-    <p>{{ $users->password}}</p>
+    <p>{{ $users->password_deHash}}</p>
 </div>
 
 <!-- Remember Token Field -->

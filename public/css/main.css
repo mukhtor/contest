@@ -1,0 +1,22 @@
+body{
+    background: #fafafa;
+}
+.countdown{
+    font-size: 50px;
+}
+.card{
+    margin-bottom: 30px;
+    border: 0px;
+    border-radius: 0.625rem;
+    box-shadow: 6px 11px 41px -28px #a99de7;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+}
+.card .card-body{
+    padding: 1.2rem;
+}

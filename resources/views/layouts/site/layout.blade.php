@@ -7,19 +7,23 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}">
+    <link rel="stylesheet" href="{{ asset("css/main.css") }}">
+    @stack("page-css")
 </head>
 
 <body>
 
 @include('layouts.site.header')
 
-<div class="container pt-5">
+<div class="p-3 pt-5">
     @yield('main_content')
 </div>
 
 <script src="{{asset("js/jquery-3.2.1.slim.min.js")}}"></script>
 <script src="{{asset("js/popper.min.js")}}"></script>
 <script src="{{asset("js/bootstrap.min.js")}}"></script>
+@stack('child-scripts')
+@stack('child2-scripts')
 </body>
 
 </html>
