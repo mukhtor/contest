@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model as Model;
  * @package App\Models
  * @version April 12, 2021, 1:53 pm UTC
  *
- * @property \App\Models\Group $group
+ * @property \App\Models\Groups $group
  * @property \Illuminate\Database\Eloquent\Collection $contestHistories
  * @property integer $group_id
  * @property string $name
