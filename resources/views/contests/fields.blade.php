@@ -1,5 +1,5 @@
 <!-- Title Field -->
-<div class="form-group col-sm-6">
+<div class="form-group col-sm-12">
     {!! Form::label('title', 'Title:') !!}
     {!! Form::text('title', null, ['class' => 'form-control','maxlength' => 255,'maxlength' => 255]) !!}
 </div>
@@ -25,12 +25,22 @@
     {!! Form::label('duration', 'Duration:') !!}
     {!! Form::number('duration', null, ['class' => 'form-control']) !!}
 </div>
-<div class="form-group col-sm-6">
-    {!! Form::label('question_count', 'Question Count:') !!}
-    {!! Form::number('question_count', null, ['class' => 'form-control']) !!}
-</div>
-<div class="form-group col-sm-6">
-    {!! Form::label('subjects', 'Subjects:') !!}
-    {!! Form::select('subjects[]', $subjects, null, ['class' => 'form-control','multiple']) !!}
-</div>
+
+@foreach($subjects as $index => $subject)
+    <div class="form-group col-sm-2">
+        {!! Form::label("subjects[$index]", "$subject:") !!}
+        {!! Form::number(
+            "subjects[$index]",
+            $subjects_count[$index] ?? 0,
+            [
+                'class' => 'form-control',
+                'max' => \App\Models\Questions::where(
+                    ['subject_id' => $index]
+                    )->count(),
+                'min' => 0
+            ])
+        !!}
+    </div>
+@endforeach
+
 

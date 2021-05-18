@@ -6,7 +6,6 @@
             <th>Begin Date</th>
             <th>Duration</th>
             <th>Question Count</th>
-            <th>Subjects</th>
             <th colspan="3">Action</th>
         </tr>
         </thead>
@@ -17,11 +16,6 @@
                 <td>{{ $contest->begin_date }}</td>
                 <td>{{ $contest->duration }}</td>
                 <td>{{ $contest->question_count }}</td>
-                <td>
-                    @foreach($contest->ContestParsed as $item)
-                        {{\Illuminate\Support\Facades\DB::table('subjects')->where('id',$item)->pluck('name')->implode(' ')}}
-                     @endforeach
-                </td>
                 <td width="120">
                     {!! Form::open(['route' => ['contests.destroy', $contest->id], 'method' => 'delete']) !!}
                     <div class='btn-group'>

@@ -48,6 +48,19 @@ class ContestController extends AppBaseController
         return view('contests.create',compact('subjects'));
     }
 
+    private function unpluckSubject( $request ){
+        $subjects = [];
+        $question_count = 0;
+        foreach ($request->subjects as $subject_id => $count){
+            if (intval($count) > 0)
+                array_push($subjects, [
+                    'subject_id' => $subject_id,
+                    'count' => $count
+                ]);
+            $question_count += $count;
+        }
+        return ['count' => $question_count , 'subjects' => $subjects];
+    }
     /**
      * Store a newly created Contest in storage.
      *
@@ -57,13 +70,13 @@ class ContestController extends AppBaseController
      */
     public function store(CreateContestRequest $request)
     {
-
+        $ans = $this->unpluckSubject($request);
         Contest::create([
             'title' =>$request->title,
-            'question_count' =>$request->question_count,
+            'question_count' => $ans['count'],
             'begin_date' => $request->begin_date,
             'duration' => $request->duration,
-            'subjects' => json_encode($request->subjects)
+            'subjects' => $ans['subjects']
         ]);
         Flash::success('Contest saved successfully.');
 
@@ -86,7 +99,6 @@ class ContestController extends AppBaseController
 
             return redirect(route('contests.index'));
         }
-
         return view('contests.show')->with('contest', $contest);
     }
 
@@ -100,14 +112,15 @@ class ContestController extends AppBaseController
     public function edit($id)
     {
         $contest = $this->contestRepository->find($id);
-        $subjects = Subjects::all()->pluck('name','id');
         if (empty($contest)) {
             Flash::error('Contest not found');
-
             return redirect(route('contests.index'));
         }
 
-        return view('contests.edit')->with('contest', $contest)->with('subjects', $subjects);
+        $subjects = Subjects::all()->pluck('name', 'id');
+        $subjects_count = collect(json_decode($contest->subjects, true))->pluck('count', 'subject_id');
+
+        return view('contests.edit')->with('contest', $contest)->with('subjects', $subjects)->with('subjects_count', $subjects_count);
     }
 
     /**
@@ -127,8 +140,14 @@ class ContestController extends AppBaseController
 
             return redirect(route('contests.index'));
         }
+        $ans = $this->unpluckSubject($request);
 
-        $contest = $this->contestRepository->update($request->all(), $id);
+        $request->merge([
+            'question_count' => $ans['count'],
+            'subjects' => $ans['subjects']
+        ]);
+
+        $this->contestRepository->update($request->all(), $id);
 
         Flash::success('Contest updated successfully.');
 

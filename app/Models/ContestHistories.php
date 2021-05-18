@@ -25,8 +25,6 @@ class ContestHistories extends Model
     const UPDATED_AT = 'updated_at';
 
 
-
-
     public $fillable = [
         'user_id',
         'contest_id',
@@ -79,24 +77,29 @@ class ContestHistories extends Model
         return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
 
-    public static function make($contest_id, $user_id){
+    public static function make($contest_id, $user_id)
+    {
+
         $contest = Contest::findOrFail($contest_id);
+
         $question_count = $contest->question_count;
+
         $subjects = json_decode($contest->subjects);
-        $subjectCount = count($subjects);
-        $userQuestions=[];
-        for ($x = 0;$x < $question_count; $x++){
-            $subject_id = $subjects[$x%$subjectCount];
-            $subject = Questions::where('subject_id',$subject_id)->inRandomOrder()->first();
-            array_push($userQuestions,['id' => $subject->id, 'editor' => $subject->editor]);
-        }
-        foreach ($userQuestions as $item){
-            ContestHistories::create([
-                'user_id' =>Auth::id(),
-                'question_id' => $item['id'],
-                'contest_id' =>$contest->id,
-                'answer' => $item['editor']
-            ]);
+
+        $userQuestions = [];
+        foreach ($subjects as $subject) {
+            $count = Questions::where(['subject_id' => $subject->subject_id])->count();
+            $questions = Questions::where([
+                'subject_id' => $subject->subject_id
+            ])->get()->random(min($subject->count, $count));
+            foreach ($questions as $question){
+                ContestHistories::create([
+                    'user_id' => Auth::id(),
+                    'question_id' => $question->id,
+                    'contest_id' => $contest->id,
+                    'answer' => $question->editor
+                ]);
+            }
         }
     }
 }
