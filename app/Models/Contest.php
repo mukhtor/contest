@@ -70,4 +70,16 @@ class Contest extends Model
     public function getContestParsedAttribute(){
         return json_decode($this->subjects);
     }
+    public function toStart(){
+        return strtotime($this->begin_date)- time();
+    }
+    public function isStart(){
+        return $this->toStart() <= 0;
+    }
+    public function toFinish(){
+        return  strtotime($this->begin_date) + $this->duration * 60 - time();
+    }
+    public function isFinish(){
+        return $this->toFinish() <= 0;
+    }
 }

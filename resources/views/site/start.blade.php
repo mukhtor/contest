@@ -30,7 +30,6 @@
 @push('child-scripts')
     <script>
         $(document).ready(function (){
-
             $('.countdown').each(function (){
                 let countdown = $(this);
                 let dist = parseInt(countdown.attr('data-time')) * 1000;

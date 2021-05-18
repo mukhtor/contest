@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateContestHistoriesRequest;
 use App\Models\Contest;
 use App\Models\ContestHistories;
 use App\Models\ContestUsers;
@@ -9,6 +10,7 @@ use App\Models\Questions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Laracasts\Flash\Flash;
 
 class SiteController extends Controller
 {
@@ -33,18 +35,56 @@ class SiteController extends Controller
         return view('site.start',compact('start'));
     }
 
-    public function startContest($id){
+    public function startContest($id, Request $request){
 
         $contest = Contest::findOrFail($id);
+
+        if (!$contest->isStart())
+            return redirect()->route('home');
 
         if (!ContestHistories::where('contest_id',$id)->where('user_id',Auth::id())->count())
             ContestHistories::make($id, Auth::id());
 
+
         $questions = ContestHistories::where('contest_id',$id)->where('user_id',Auth::id())->get();
 
-        return view('site.start_contest' ,compact('questions'));
+        $number = $request['q'] ?? 1;
+
+        if ($number < 1 || $number > count($questions))
+            $number = 1;
+
+        return view('site.start_contest')->with('questions', $questions)->with('number', $number);
     }
 
+    public function answer($id, Request $request){
+
+        $contest = Contest::find($id);
+
+        if (empty($contest) || !$contest->isStart())
+            return redirect()->route('home');
+
+
+        $url = explode('#', $request->submit)[1] ?? $request->number ?? 1;
+
+        $questions = ContestHistories::where('contest_id',$id)->where('user_id',Auth::id())->get();
+
+        if ($url < 0 || $url > count($questions))
+            $url = $request->number ?? 1;
+
+        if (!isset($request->number) || !isset($questions[$request -> number - 1]))
+            return redirect()->back();
+
+        if (!$contest->isFinish()){
+            $contest = $questions[$request -> number - 1];
+            $contest->answer = $request->answer;
+            $contest->save();
+        }else{
+            Flash::error('Contest Finished')->important();
+        }
+
+        return redirect()->to("start_contest/$id?q=$url");
+
+    }
     public function moreHistory($id){
         $more_data = ContestHistories::where('contest_id',$id)->get();
         return view('site.more_history',compact('more_data'));

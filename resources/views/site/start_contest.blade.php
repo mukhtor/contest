@@ -10,34 +10,34 @@
 @endpush
 @section('main_content')
     <div>
-
         <div class="card">
             <div class="card-body">
                 <div class="pl-3 pr-3">
                     <div class="row">
                         <div class="col-md-6">
-                            <h5>{{$questions[0]->getContest->title ?? "Empty"}}</h5>
+                            <h5>{{$questions[$number - 1]->getContest->title ?? "Empty"}}</h5>
                         </div>
                         <div class="col-md-6">
                             <h5>
-                                <div id="ten-countdown" class="timer text-right"></div>
+                                @if(!$questions[$number - 1]->getContest->isFinish())
+                                    <p id="countdown" class="text-right" data-status="start" data-time="{{$questions[$number - 1]->getContest->toFinish()}}"></p>
+                                @else
+                                    <p id="countdown" class="text-right" data-status="finish" data-time="0" data-callback-url=""></p>
+                                @endif
                             </h5>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row" id="accordion">
+        {!! Form::model($questions[$number - 1], ['route' => ['site.answer', $questions[$number - 1]->contest_id], 'method' => 'patch']) !!}
+            <div class="row">
             <div class="col-md-2">
                 <div class="card">
                     <div class="card-body">
                         <p class="text-center">Savollar</p>
                         @foreach($questions as $index => $question)
-                            <button id="heading{{ $index + 1 }}" class="btn btn-link m-auto" data-toggle="collapse"
-                                    data-target="#collapse{{$index + 1}}" aria-expanded="true"
-                                    aria-controls="collapse{{$index + 1}}">
-                                Question #{{ $index + 1 }}
-                            </button>
+                            {!! Form::submit('Question #'.($index + 1), ['class' => 'btn btn-link', 'name' => 'submit']) !!}
                         @endforeach
                     </div>
                 </div>
@@ -45,65 +45,28 @@
             <div class="col-md-10">
                 <div class="card">
                     <div class="card-body">
-                        @foreach($questions as $index => $question)
-                            <div id="collapse{{$index + 1}}" class="collapse {{!$index ? "show": ""}}"
-                                 aria-labelledby="heading{{ $index + 1 }}" data-parent="#accordion">
-                                <div class="card-body">
-                                    <h6>Question #{{ $index + 1 }}</h6>
-                                    <p>{!! $question->question->questions  !!}</p>
-                                </div>
-                                <textarea id="editor{{$index + 1}}">
-                                </textarea>
-                                <div class="result">
-                                    <h2>Результат</h2>
-                                    <iframe src="" frameborder="1" id="frame{{$index + 1}}"></iframe>
-                                </div>
-                                @push("child2-scripts")
-                                    <script>
-                                        var mixedMode = {
-                                            name: "htmlmixed",
-                                            scriptTypes: [{
-                                                matches: /\/x-handlebars-template|\/x-mustache/i,
-                                                mode: null
-                                            },
-                                                {
-                                                    matches: /(text|application)\/(x-)?vb(a|script)/i,
-                                                    mode: "vbscript"
-                                                }]
-                                        };
-                                        var editor = CodeMirror.fromTextArea(document.getElementById('editor{{$index + 1}}'), {
-                                            mode: mixedMode,
-                                            selectionPointer: true,
-                                            autoCloseTags: true,
-                                            lineNumbers: true
-                                        });
-                                        editor.setOption("theme", "darcula");
-                                        editor.getDoc().setValue(`{!! $question->answer !!}`);
+                        @include('flash::message')
+                        <input type="submit" value="Saqlash" name="submit" class="float-right btn btn-success btn-sm"></input>
+                        <h6><b>Question #{{ $number }}</b></h6>
+                        <p>{!! $questions[$number - 1]->question->questions  !!}</p>
 
-                                        function showResult(iframe, editorRoot) {
-                                            console.log(editorRoot.getValue());
-                                            const iframePage = iframe.contentDocument ||  iframe.contentWindow.document;
-                                            iframePage.open();
-                                            iframePage.write(editorRoot.getValue());
-                                            iframePage.close();
-                                        }
-                                        // let delay;
-                                        editor.on("change", function() {
-                                            // clearTimeout(delay);
-                                            // delay = setTimeout(() => {
-                                                showResult(document.querySelector('#frame{{$index+1}}'), editor)
-                                            // }, 500);
-                                        });
-                                    </script>
-                                @endpush
-
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="hidden" name="number" value="{{ $number }}">
+                                <textarea id="editor" name="answer"></textarea>
                             </div>
-                        @endforeach
+                            <div class="col-md-6">
+                                <div class="result">
+                                    <iframe class="border" width="100%" height="300px" src="" frameborder="1" id="frame"></iframe>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        {{ Form::close() }}
     </div>
     @push('child-scripts')
         <script src="{{asset('vendor/codemirror/lib/codemirror.js')}}"></script>
@@ -115,7 +78,70 @@
         <script src="{{asset('vendor/codemirror/mode/css/css.js')}}"></script>
         <script src="{{asset('vendor/codemirror/mode/vbscript/vbscript.js')}}"></script>
         <script src="{{asset('vendor/codemirror/mode/htmlmixed/htmlmixed.js')}}"></script>
+        <script>
+            var mixedMode = {
+                name: "htmlmixed",
+                scriptTypes: [{
+                    matches: /\/x-handlebars-template|\/x-mustache/i,
+                    mode: null
+                },
+                    {
+                        matches: /(text|application)\/(x-)?vb(a|script)/i,
+                        mode: "vbscript"
+                    }]
+            };
+            var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+                mode: mixedMode,
+                selectionPointer: true,
+                autoCloseTags: true,
+                lineNumbers: true
+            });
+            editor.getDoc().setValue(`{!! $questions[$number - 1]->answer !!}`);
 
+            function showResult(iframe, editorRoot) {
+                console.log(editorRoot.getValue());
+                const iframePage = iframe.contentDocument ||  iframe.contentWindow.document;
+                iframePage.open();
+                iframePage.write(editorRoot.getValue());
+                iframePage.close();
+            }
+            showResult(document.querySelector('#frame'), editor)
+            // let delay;
+            editor.on("change", function() {
+                // clearTimeout(delay);
+                // delay = setTimeout(() => {
+                showResult(document.querySelector('#frame'), editor)
+                // }, 500);
+            });
+        </script>
+        <script>
+            let countdown = $('#countdown');
+            let dist = parseInt(countdown.attr('data-time')) * 1000;
+            let interval = setInterval(fun, 1000);
+            let status = countdown.attr('data-status');
+            function fun(){
+
+                let numOfDays = Math.floor(dist / (1000 * 60 * 60 * 24));
+
+                let hr = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                let min = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+
+                let sec = Math.floor((dist % (1000 * 60)) / 1000);
+
+                countdown.html(numOfDays + "d " + hr + "h " + min + "m " + sec + "s ");
+
+                if (dist <= 0){
+                    countdown.html("Finished!");
+                    clearInterval(interval);
+                    if (status !== 'finish'){
+                        location.reload();
+                    }
+                }else{
+                    dist -= 1000;
+                }
+            }
+        </script>
     @endpush
 
 @endsection

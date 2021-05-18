@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\SiteController::class, 'beginContest'])->name('begin');
 Route::get('start/{id}', [\App\Http\Controllers\SiteController::class, 'start'])->name('start');
+Route::patch('answer/{id}', [\App\Http\Controllers\SiteController::class, 'answer'])->name('site.answer')->middleware('auth');
 Route::get('more/{id}', [\App\Http\Controllers\SiteController::class, 'moreHistory'])->name('more');
 Route::get('start_contest/{id}', [\App\Http\Controllers\SiteController::class, 'startContest'])->name('start_contest');
 
