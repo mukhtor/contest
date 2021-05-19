@@ -20,9 +20,13 @@
                         <div class="col-md-6">
                             <h5>
                                 @if(!$questions[$number - 1]->getContest->isFinish())
-                                    <p id="countdown" class="text-right" data-status="start" data-time="{{$questions[$number - 1]->getContest->toFinish()}}"></p>
+                                    <p id="countdown" class="text-right" data-status="start" data-time="{{$questions[$number - 1]->getContest->toFinish()}}">
+                                        {{ date("h:i:s", strtotime("today") + $questions[$number - 1]->getContest->toFinish()) }}
+                                    </p>
                                 @else
-                                    <p id="countdown" class="text-right" data-status="finish" data-time="0" data-callback-url=""></p>
+                                    <p id="countdown" class="text-right" data-status="finish" data-time="0" data-callback-url="">
+                                        00:00:00
+                                    </p>
                                 @endif
                             </h5>
                         </div>
@@ -69,6 +73,46 @@
         {{ Form::close() }}
     </div>
     @push('child-scripts')
+        <script>
+            let countdown = $('#countdown');
+            let dist = parseInt(countdown.attr('data-time')) * 1000;
+            let interval = setInterval(fun, 1000);
+            let status = countdown.attr('data-status');
+            function fun(){
+
+                let addZero = (x) => {
+                    if (x < 10) x = "0" + x;
+                    return x;
+                }
+                let numOfDays = Math.floor(dist / (1000 * 60 * 60 * 24));
+
+                let hr = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                let min = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+
+                let sec = Math.floor((dist % (1000 * 60)) / 1000);
+
+                hr = addZero(hr);
+                min = addZero(min);
+                sec = addZero(sec);
+
+                let ans = "";
+                if (numOfDays)
+                    ans += numOfDays + "d ";
+
+                countdown.html(ans + hr + ":" + min + ":" + sec);
+
+                if (dist <= 0){
+                    countdown.html("Finished!");
+                    clearInterval(interval);
+                    if (status !== 'finish'){
+                        location.reload();
+                    }
+                }else{
+                    dist -= 1000;
+                }
+            }
+        </script>
         <script src="{{asset('vendor/codemirror/lib/codemirror.js')}}"></script>
         <script src="{{asset('vendor/codemirror/addon/selection/selection-pointer.js')}}"></script>
         <script src="{{asset('vendor/codemirror/addon/edit/closetag.js')}}"></script>
@@ -114,34 +158,7 @@
                 // }, 500);
             });
         </script>
-        <script>
-            let countdown = $('#countdown');
-            let dist = parseInt(countdown.attr('data-time')) * 1000;
-            let interval = setInterval(fun, 1000);
-            let status = countdown.attr('data-status');
-            function fun(){
 
-                let numOfDays = Math.floor(dist / (1000 * 60 * 60 * 24));
-
-                let hr = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-                let min = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
-
-                let sec = Math.floor((dist % (1000 * 60)) / 1000);
-
-                countdown.html(numOfDays + "d " + hr + "h " + min + "m " + sec + "s ");
-
-                if (dist <= 0){
-                    countdown.html("Finished!");
-                    clearInterval(interval);
-                    if (status !== 'finish'){
-                        location.reload();
-                    }
-                }else{
-                    dist -= 1000;
-                }
-            }
-        </script>
     @endpush
 
 @endsection

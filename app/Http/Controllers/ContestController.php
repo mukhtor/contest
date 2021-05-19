@@ -76,7 +76,7 @@ class ContestController extends AppBaseController
             'question_count' => $ans['count'],
             'begin_date' => $request->begin_date,
             'duration' => $request->duration,
-            'subjects' => $ans['subjects']
+            'subjects' => json_encode($ans['subjects'])
         ]);
         Flash::success('Contest saved successfully.');
 
