@@ -1,0 +1,57 @@
+version: "3"
+
+networks:
+  default:
+    driver: bridge
+services:
+  app:
+    build: docker/php
+    volumes:
+      - ./:/app
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+  webpacker:
+    image: node:9-alpine
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: /bin/true
+
+  nginx:
+    image: nginx:1.13-alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./:/app
+      - ./docker/nginx/vhost_single_domain.conf:/etc/nginx/conf.d/vhost.conf
+      - /var/log/nginx:/var/log/nginx
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0.20
+    networks:
+      - default
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./docker/mysql/config.cnf:/etc/mysql/conf.d/config.cnf
+    ports:
+      - 336:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "Qwert!@#45"
+      MYSQL_DATABASE: exam
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+
+#    env_file:
+#      - mysql.env
+
+  checker:
+    build: checker
+    ports:
+    - 5000:5000

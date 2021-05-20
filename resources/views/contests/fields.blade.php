@@ -13,7 +13,7 @@
 @push('page_scripts')
     <script type="text/javascript">
         $('#begin_date').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
+            format: 'YYYY-MM-DD HH:mm',
             useCurrent: true,
             sideBySide: true
         })

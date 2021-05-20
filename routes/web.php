@@ -19,6 +19,7 @@ Route::get('start/{id}', [\App\Http\Controllers\SiteController::class, 'start'])
 Route::patch('answer/{id}', [\App\Http\Controllers\SiteController::class, 'answer'])->name('site.answer')->middleware('auth');
 Route::get('more/{id}', [\App\Http\Controllers\SiteController::class, 'moreHistory'])->name('more');
 Route::get('start_contest/{id}', [\App\Http\Controllers\SiteController::class, 'startContest'])->name('start_contest');
+Route::post('compile', [\App\Http\Controllers\SiteController::class, 'compile'])->name('compile');
 
 
 require __DIR__.'/auth.php';

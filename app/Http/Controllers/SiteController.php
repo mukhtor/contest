@@ -7,7 +7,9 @@ use App\Models\Contest;
 use App\Models\ContestHistories;
 use App\Models\ContestUsers;
 use App\Models\Questions;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laracasts\Flash\Flash;
@@ -39,8 +41,14 @@ class SiteController extends Controller
 
         $contest = Contest::findOrFail($id);
 
-        if (!$contest->isStart())
-            return redirect()->route('home');
+        if (!$contest->isStart()){
+            Flash::error('Hali boshlanmadi!!')->important();
+            return redirect()->to('/');
+        }
+        if ($contest->isFinish()){
+            Flash::error('Tugadi!!')->important();
+            return redirect()->to('/');
+        }
 
         if (!ContestHistories::where('contest_id',$id)->where('user_id',Auth::id())->count())
             ContestHistories::make($id, Auth::id());
@@ -88,5 +96,13 @@ class SiteController extends Controller
     public function moreHistory($id){
         $more_data = ContestHistories::where('contest_id',$id)->get();
         return view('site.more_history',compact('more_data'));
+    }
+    public function compile(Request $request){
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ]]);
+        $response = $client->post('checker:5000/check', [
+            \GuzzleHttp\RequestOptions::JSON => ['code' => $request->post('code')],
+            'content-type' => 'application/json',
+        ]);
+        return response()->json(json_decode($response->getBody(), true));
     }
 }

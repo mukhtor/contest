@@ -21,7 +21,7 @@
                             <h5>
                                 @if(!$questions[$number - 1]->getContest->isFinish())
                                     <p id="countdown" class="text-right" data-status="start" data-time="{{$questions[$number - 1]->getContest->toFinish()}}">
-                                        {{ date("h:i:s", strtotime("today") + $questions[$number - 1]->getContest->toFinish()) }}
+                                        00:00:00
                                     </p>
                                 @else
                                     <p id="countdown" class="text-right" data-status="finish" data-time="0" data-callback-url="">
@@ -47,9 +47,9 @@
                 </div>
             </div>
             <div class="col-md-10">
-                <div class="card">
+                <div class="card" id="question">
                     <div class="card-body">
-                        @include('flash::message')
+                        <div class="float-right btn btn-primary btn-sm" id="compile">Compile</div>
                         <input type="submit" value="Saqlash" name="submit" class="float-right btn btn-success btn-sm"></input>
                         <h6><b>Question #{{ $number }}</b></h6>
                         <p>{!! $questions[$number - 1]->question->questions  !!}</p>
@@ -138,27 +138,58 @@
                 mode: mixedMode,
                 selectionPointer: true,
                 autoCloseTags: true,
-                lineNumbers: true
+                lineNumbers: true,
+                tabSize: 2,
+                viewportMargin: Infinity
             });
             editor.getDoc().setValue(`{!! $questions[$number - 1]->answer !!}`);
 
-            function showResult(iframe, editorRoot) {
-                console.log(editorRoot.getValue());
+            function showResult(iframe, value) {
                 const iframePage = iframe.contentDocument ||  iframe.contentWindow.document;
                 iframePage.open();
-                iframePage.write(editorRoot.getValue());
+                iframePage.write(value);
                 iframePage.close();
+                iframe.style.height = iframePage.documentElement.scrollHeight + 5 + 'px';
             }
-            showResult(document.querySelector('#frame'), editor)
+            showResult(document.querySelector('#frame'), editor.getValue())
             // let delay;
             editor.on("change", function() {
                 // clearTimeout(delay);
                 // delay = setTimeout(() => {
-                showResult(document.querySelector('#frame'), editor)
+                showResult(document.querySelector('#frame'), editor.getValue())
                 // }, 500);
             });
+            $("#compile").click(function (){
+                $(this).html("Compiling...");
+                $(this).attr("id", "");
+                $.ajax({
+                    url: '/compile',
+                    type: 'post',
+                    data: {
+                        code: editor.getValue()
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                }).done(function (response) {
+                    showResult(document.querySelector('#frame'), response.result)
+                })
+                //$(this).html("Compile");
+            });
         </script>
+        <script>
+            $(window).keydown(function(event){
 
+                if(event.keyCode == 116) {
+
+                    event.preventDefault();
+
+                    return false;
+
+                }
+
+            });
+        </script>
     @endpush
 
 @endsection

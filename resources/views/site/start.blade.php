@@ -11,10 +11,14 @@
                     <h2 class="contest-title">{{$start->title}}</h2>
 
                     @if(strtotime($start->begin_date) > time())
-                        <p class="countdown" data-status="start" data-time="{{strtotime($start->begin_date) - time()}}"></p>
+                        <p class="countdown" data-status="start" data-time="{{strtotime($start->begin_date) - time()}}">
+                            0d 0h 0m 0s
+                        </p>
                         <a class="main-button icon-button" href="{{route('begin')}}">Bosh Sahifa</a>
                     @else
-                        <p class="countdown" data-status="finish" data-time="0" data-callback-url=""></p>
+                        <p class="countdown" data-status="finish" data-time="0" data-callback-url="">
+                            0d 0h 0m 0s
+                        </p>
                         <a class="main-button icon-button" href="{{route('start_contest',$start->id)}}">Boshlash</a>
                     @endif
                 </div>

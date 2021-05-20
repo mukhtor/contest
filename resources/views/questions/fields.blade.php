@@ -84,8 +84,11 @@
         var editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
             mode: mixedMode,
             selectionPointer: true,
-            autoCloseTags: true
+            autoCloseTags: true,
+            tabSize: 2,
+            lineNumbers: true,
         });
+        if (!editor.getValue())
         editor.getDoc().setValue(`<!doctype html>
 <html lang="en">
 <head>
