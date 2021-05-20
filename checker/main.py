@@ -12,21 +12,29 @@ php_disable_functions = 'disable_functions=system,exec,shell_exec,proc_open,pope
 def check():
     data = request.json
     t = time()
-    out_file = f'output.txt{t}'
+    out_file = f'output{t}.txt'
+    code_file = f'code{t}.php'
     output = open(out_file, 'w+')
-    process = Popen(['php', '-d', php_disable_functions, '-r', data['code']], stdout=output, stderr=output)
+
+    with open(code_file, 'w') as f:
+        f.write(data['code'])
+
+    process = Popen(['php', '-d', php_disable_functions, code_file], stdout=output, stderr=output)
     exit_code = -1
     result = ''
+
     try:
         exit_code = process.wait(5)
     except Exception as e:
         print(e)
+
     if process.is_running():
         process.kill()
     output.seek(0)
     result = output.read()
     output.close()
     os.remove(out_file)
+    os.remove(code_file)
     return jsonify({'exit_code': exit_code, 'result': result})
 
 
