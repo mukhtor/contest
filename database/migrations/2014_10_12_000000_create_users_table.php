@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('password_deHash')->nullable();
             $table->rememberToken();
+            $table->char('ip', 16)->nullable();
             $table->timestamps();
         });
     }

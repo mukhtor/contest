@@ -30,7 +30,7 @@
 
 <!-- Remember Token Field -->
 <div class="col-sm-12">
-    {!! Form::label('remember_token', 'Remember Token:') !!}
-    <p>{{ $users->remember_token }}</p>
+    {!! Form::label('ip', 'IP:') !!}
+    <p>{{ $users->ip }}</p>
 </div>
 

@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -31,9 +33,21 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        $role = Auth::user()->role;
-        if($role == 'admin')
+        $user = User::where(['ip' => $request->ip()])->first();
+        if ( Auth::user()->role != 'admin' && (( $user && $user->id != Auth::user()->id ) || (!is_null(Auth::user()->ip) && $request->ip() != Auth::user()->ip))){
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'ip' => __('ip.conflict')
+            ]);
+        }
+
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $user->ip = $request->ip();
+        $user->save();
+        if($user->role == 'admin')
             return redirect('/admin');
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
