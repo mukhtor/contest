@@ -43,7 +43,7 @@ class AuthenticatedSessionController extends Controller
 
         $id = Auth::user()->id;
         $user = User::find($id);
-        $user->ip = $request->ip();
+        $user->ip = Auth::user()->role == 'admin' ? null : $request->ip();
         $user->save();
         if($user->role == 'admin')
             return redirect('/admin');

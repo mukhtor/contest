@@ -97,12 +97,9 @@ class SiteController extends Controller
         $more_data = ContestHistories::where('contest_id',$id)->get();
         return view('site.more_history',compact('more_data'));
     }
+
     public function compile(Request $request){
-        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ]]);
-        $response = $client->post('checker:5000/check', [
-            \GuzzleHttp\RequestOptions::JSON => ['code' => $request->post('code')],
-            'content-type' => 'application/json',
-        ]);
-        return response()->json(json_decode($response->getBody(), true));
+        $body = ContestHistories::compile($request->post('code'));
+        return response()->json($body);
     }
 }

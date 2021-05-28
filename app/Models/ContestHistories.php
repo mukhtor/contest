@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model as Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -60,6 +61,13 @@ class ContestHistories extends Model
     {
         return $this->belongsTo(\App\Models\Contest::class, 'contest_id');
     }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function contest()
+    {
+        return $this->belongsTo(\App\Models\Contest::class, 'contest_id');
+    }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -79,7 +87,6 @@ class ContestHistories extends Model
 
     public static function make($contest_id, $user_id)
     {
-
         $contest = Contest::findOrFail($contest_id);
 
         $question_count = $contest->question_count;
@@ -101,5 +108,21 @@ class ContestHistories extends Model
                 ]);
             }
         }
+    }
+    public function getCompileAttribute(){
+        return self::compile($this->answer);
+    }
+    /**
+     * @param $code
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public static function compile($code){
+        $client = new Client(['headers' => [ 'Content-Type' => 'application/json' ]]);
+        $response = $client->post('checker:5000/check', [
+            \GuzzleHttp\RequestOptions::JSON => ['code' => $code],
+            'content-type' => 'application/json',
+        ]);
+        return json_decode($response->getBody(), true);
     }
 }

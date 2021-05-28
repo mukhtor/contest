@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateContestRequest;
 use App\Http\Requests\UpdateContestRequest;
 use App\Models\Contest;
+use App\Models\ContestHistories;
 use App\Models\Subjects;
 use App\Repositories\ContestRepository;
 use App\Http\Controllers\AppBaseController;
@@ -100,6 +101,26 @@ class ContestController extends AppBaseController
             return redirect(route('contests.index'));
         }
         return view('contests.show')->with('contest', $contest);
+    }
+    /**
+     * Display the specified Contest.
+     *
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function result($id, $user_id)
+    {
+        $contest = $this->contestRepository->find($id);
+
+        if (empty($contest)) {
+            Flash::error('Contest not found');
+
+            return redirect(route('contests.index'));
+        }
+        $contestHistories = ContestHistories::where(['contest_id' => $id, 'user_id' => $user_id])->get();
+
+        return view('contests.result')->with('contestHistories', $contestHistories);
     }
 
     /**

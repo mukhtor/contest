@@ -70,6 +70,11 @@ class Contest extends Model
     public function getContestParsedAttribute(){
         return json_decode($this->subjects);
     }
+
+    public function getUsersAttribute(){
+        return json_decode($this->contestUsers->user_id);
+    }
+
     public function toStart(){
         return strtotime($this->begin_date)- time();
     }
@@ -82,4 +87,19 @@ class Contest extends Model
     public function isFinish(){
         return $this->toFinish() <= 0;
     }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function contestHistories()
+    {
+        return $this->hasMany(\App\Models\ContestHistories::class, 'contest_id');
+    }
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     **/
+    public function contestUsers()
+    {
+        return $this->HasOne(\App\Models\ContestUsers::class, 'contest_id');
+    }
+
 }

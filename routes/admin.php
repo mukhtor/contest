@@ -16,6 +16,8 @@ Route::group([
 
     Route::resource('contests', App\Http\Controllers\ContestController::class);
 
+    Route::get('contests/{id}/user/{user_id}', [\App\Http\Controllers\ContestController::class, 'result'])->name('result');
+
     Route::resource('contestQuestions', App\Http\Controllers\ContestQuestionsController::class);
 
     Route::resource('contestUsers', App\Http\Controllers\ContestUsersController::class);

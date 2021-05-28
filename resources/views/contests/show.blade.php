@@ -25,7 +25,17 @@
                     @include('contests.show_fields')
                 </div>
             </div>
+        </div>
+    </div>
 
+    <div class="content px-3">
+        <div class="card">
+
+            <div class="card-body">
+                <div class="row">
+                    @include('contests.show_contest_users')
+                </div>
+            </div>
         </div>
     </div>
 @endsection
